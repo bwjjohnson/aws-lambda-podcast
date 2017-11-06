@@ -21,5 +21,8 @@
   },
   "devDependencies": {
     "node-lambda": "^0.9.0"
+  },
+  "dependencies": {
+    "request": "^2.83.0"
   }
 }
