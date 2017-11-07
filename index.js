@@ -16,7 +16,7 @@ exports.handler = function(event, context, callback) {
   console.log('event', event);
   console.log('==================================');
   request(subsplash_rss, function(err, res, body){
-    if (err) { return console.log(err); }
+    if (err) { return console.error(err); }
     transformFeedXML(body);
   });
 };
@@ -37,7 +37,7 @@ function uploadPodcastToS3(xml){
     ContentType: 'application/rss+xml'};
   s3.upload(uploadParams, function(err, data) {
     if (err) {
-      console.log("Error uploading data: ", err);
+      console.error("Error uploading data: ", err);
     } else {
       console.log("Successfully updated feed at " + uploadParams['Bucket'] + '/' + uploadParams['Key']);
     }
