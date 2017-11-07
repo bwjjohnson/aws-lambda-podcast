@@ -17,7 +17,7 @@ exports.handler = function(event, context, callback) {
   console.log('==================================');
   request(subsplash_rss, function(err, res, body){
     if (err) { return console.error(err); }
-    transformFeedXML(body);
+    uploadPodcastToS3(transformFeedXML(body));
   });
 };
 
@@ -25,8 +25,7 @@ function transformFeedXML(rawxml){
   var doc = new DOMParser().parseFromString(rawxml);
   // Update the atom:link to match our URL
   doc.getElementsByTagName('atom:link')[0].setAttribute('href', podcast_url);
-  var newxml = new XMLSerializer().serializeToString(doc);
-  uploadPodcastToS3(newxml);
+  return new XMLSerializer().serializeToString(doc);
 };
 
 function uploadPodcastToS3(xml){
